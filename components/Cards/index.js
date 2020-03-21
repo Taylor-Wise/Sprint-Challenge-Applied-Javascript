@@ -19,30 +19,16 @@
 // Create a card for each of the articles and add the card to the DOM.
 const cardContainer = document.querySelector(".cards-container")
 
-axios.get("https://lambda-times-backend.herokuapp.com/articles")
+axios.get('https://lambda-times-backend.herokuapp.com/articles')
 .then(response => {
-    const responseInfo = response.data.articles
+    const articlesArray = Object.keys(response.data.articles)
 
-    responseInfo.javascript.forEach(array => {
-        const newCard = createCard(array)
-        cardContainer.appendChild(newCard)    
-    });
-    responseInfo.bootstrap.forEach(array => {
-        const newCard = createCard(array)
-        cardContainer.appendChild(newCard)    
-    });
-    responseInfo.technology.forEach(array => {
-        const newCard = createCard(array)
-        cardContainer.appendChild(newCard)    
-    });
-    responseInfo.jquery.forEach(array => {
-            const newCard = createCard(array)
-            cardContainer.appendChild(newCard)    
-    });
-    responseInfo.node.forEach(array => {
-        const newCard = createCard(array)
-        cardContainer.appendChild(newCard)    
-    }); 
+    articlesArray.forEach(articleName => {
+        response.data.articles[articleName].forEach(article => {
+         const newCard = createCard(article)
+         cardContainer.appendChild(newCard)
+      })
+    })
 })
 .catch (err => {
     console.log(err)
